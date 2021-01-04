@@ -13,9 +13,22 @@ canvas.center();
 video = createCapture(VIDEO); 
 video.hide(); 
 poseNet=ml5.poseNet ,modelLoaded;
-poseNet=on('pose',gotPoses);
+poseNet.on('pose',gotPoses);
 } 
 
+function gotPoses(results){
+  if (results.length>0) {
+      console.log(results);
+  scoreLeftwrist=results[0].pose.keypoints[9].score;
+  
+      leftWristX=results[0].pose.leftWrist.x;
+  leftWristY=results[0].pose.leftWrist.y;
+  console.log("Left Wrist X= " + leftWristX + "Left Wrist Y= " + leftWristY );
+  rightWristX=results[0].pose.rightWrist.x;
+  rightWristY=results[0].pose.rightWrist.y;
+  console.log("Right Wrist X= " + rightWristX + "Right WristX= " + rightWristY );
+  
+  }
 
 function modelLoaded(){
 console.log('poseNet is Initialied');  
@@ -69,19 +82,7 @@ function play()
 }
 
 
-function gotPoses(results){
-if (results.length>0) {
-    console.log(results);
-scoreLeftwrist=results[0].pose.keypoints[9].score;
 
-    leftWristX=results[0].pose.leftWrist.x;
-leftWristY=results[0].pose.leftWrist.y;
-console.log("Left Wrist X= " + leftWristX + "Left Wrist Y= " + leftWristY );
-rightWristX=results[0].pose.rightWrist.x;
-rightWristY=results[0].pose.rightWrist.y;
-console.log("Right Wrist X= " + rightWristX + "Right WristX= " + rightWristY );
-
-}
 
 
 }
